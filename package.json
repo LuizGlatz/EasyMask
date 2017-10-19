@@ -1,0 +1,24 @@
+{
+  "name": "easy-mask",
+  "version": "1.0.0",
+  "description": "A project developed to help others developers with simple and common tasks",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuizGlatz/EasyMask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuizGlatz/EasyMask/issues"
+  },
+  "homepage": "https://github.com/LuizGlatz/EasyMask#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0"
+  }
+}
