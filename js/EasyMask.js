@@ -14,6 +14,19 @@ function mask (e) {
 				(v.length > 3) ? v.replace(/(\d{3})(\d{1,3})/, '$1.$2') :
 				(v.length > 0) ? v : '';
 			break;
+		case 'cnpj':
+			v = v.replace(/\D/g, '');
+
+			if (v.length > 14) {
+				v = v.substr(0, 14);
+			}
+
+			e.value = (v.length > 12) ? v.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{1,2})/, '$1.$2.$3/$4-$5') :
+				(v.length > 8) ? v.replace(/(\d{2})(\d{3})(\d{3})(\d{1,4})/, '$1.$2.$3/$4') :
+				(v.length > 5) ? v.replace(/(\d{2})(\d{3})(\d{1,3})/, '$1.$2.$3') :
+				(v.length > 2) ? v.replace(/(\d{2})(\d{1,3})/, '$1.$2') :
+				(v.length > 0) ? v : '';
+			break;
 		case 'telefone':
 			v = v.replace(/\D/g, '');
 
@@ -115,29 +128,69 @@ function maskData (v) {
 	return n;
 }
 
-function cpfRepetido (v) {
-	return v[0] == v[1] && v[1] == v[2] && v[2] == v[3] && v[3] == v[4] && v[4] == v[5] &&
-		v[5] == v[6] && v[6] == v[7] && v[7] == v[8] && v[8] == v[9] && v[9] == v[10];
+function digRepetido (digitos) {
+	for (let digito of digitos) {
+		if (digitos[0] != digito) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function digCrescente (digitos) {
+	return digitos.match(/(123456789)/);
+}
+
+function digDecrescente (digitos) {
+	return digitos.match(/(987654321)/);
 }
 
 function cpfValido (v) {
-	if (v.length === 11 && !cpfRepetido(v)) {
+	if (v.length === 11 && !digRepetido(v) && !digCrescente(v) && !digDecrescente(v)) {
 		let r = 0;
 
 		for (let i = 0; i < 9; i++) {
 			r += v[i] * (10 - i);
 		}
 		r = r % 11;
-		let x = (r === 0 || r === 1) ? 0 : 11 - r;
+		let x = (r < 2) ? 0 : 11 - r;
 
 		r = 0;
 		for (let i = 0; i < 10; i++) {
 			r += v[i] * (11 - i);
 		}
 		r = r % 11;
-		let y = (r === 0 || r === 1) ? 0 : 11 - r;
+		let y = (r < 2) ? 0 : 11 - r;
 
 		return (x == v[9] && y == v[10]);
+	}
+
+	return false;
+}
+
+function cnpjValido (valor) {
+	if (valor.length === 14 && !digRepetido(valor) && !digCrescente(valor) && !digDecrescente(valor)) {
+		let resto = 0;
+		let a = 5;
+		for (let i = 0; i < 12; i++) {
+			resto += valor[i] * a;
+
+			(a == 2) ? a = 9 : a--;
+		}
+		resto = resto % 11;
+		let x = (resto < 2) ? 0 : 11 - resto;
+
+		a = 6;
+		resto = 0;
+		for (let i = 0; i < 13; i++) {
+			resto += valor[i] * a;
+
+			(a == 2) ? a = 9 : a--;
+		}
+		resto = resto % 11;
+		let y = (resto < 2) ? 0 : 11 - resto;
+
+		return (x == valor[12] && y == valor[13]);
 	}
 
 	return false;
@@ -151,6 +204,17 @@ function validate (e) {
 			v = v.replace(/\D/g, '');
 
 			if (cpfValido(v)) {
+				e.classList.remove('erro');
+				e.classList.add('ok');
+			} else {
+				e.classList.remove('ok');
+				e.classList.add('erro');
+			}
+			break;
+		case 'cnpj':
+			v = v.replace(/\D/g, '');
+
+			if (cnpjValido(v)) {
 				e.classList.remove('erro');
 				e.classList.add('ok');
 			} else {
@@ -172,7 +236,7 @@ function validate (e) {
 		case 'data':
 			v = v.split('/');
 			d = new Date(v[2], v[1] - 1, v[0]);
-			if (d != 'Invalid Date' && d.getDate() == v[0] && d.getMonth() == v[1] - 1 && d.getFullYear() == v[2]) {
+			if (v[2].length == 4 && d != 'Invalid Date' && d.getDate() == v[0] && d.getMonth() == v[1] - 1 && d.getFullYear() == v[2]) {
 				e.classList.remove('erro');
 				e.classList.add('ok');
 			} else {

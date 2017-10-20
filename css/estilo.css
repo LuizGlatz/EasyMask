@@ -13,30 +13,29 @@ body {
 	font-family: sans-serif;
 	background: #4f7dbe;
 	color: #F0F8FF;
-	display: flex;
-	flex-direction: column;
 }
 main {
-	flex: 1;
+	min-height: calc(100% - 70px);
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
 }
 form {
+	padding: 0 25px;
+	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	flex-wrap: wrap;
 }
 form > .form-group {
+	margin: 10px auto;
+	width: 265px;
 	display: flex;
 	flex-direction: column;
 }
-form > .form-group:nth-child(2) {
-	margin: 0 20px;
-}
 .form-group > label {
+	margin-bottom: .25em;
 	font-weight: bold;
-	margin-top: 20px;
 	font-size: 14px;
 }
 input, select {
@@ -45,9 +44,10 @@ input, select {
 	border: 1px solid #A7A5AB;
 	background: #F0F8FF;
 	border-radius: 0;
-	padding: 0 1em;
+	min-height: 40px;
+	padding: 0 .5em;
 	height: 40px;
-	width: 275px;
+	width: 100%;
 }
 input:focus {
 	border-width: 2px;
@@ -70,25 +70,18 @@ input:focus {
 	border: 2px solid #18CF51;
 }
 footer {
-	box-shadow: 0 -1px 3px rgba(16, 16, 24, .5);
-	background: #3B649F;
-	height: 90px;
+	box-shadow: 0 -2px 4px rgba(24, 24, 48, .35);
+	background: #446DA8;
+	height: 70px;
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-footer > img {
-	border-radius: 5px;
-	margin: 0 40px;
-	height: 64px;
-	width: 64px;
-	background: url('../img/me.png');
-	background-size: 100%;
-}
 footer > a {
 	font-size: 48px;
 	color: #F0F8FF;
+	margin: 0 30px;
 }
 footer > a {
 	text-shadow: 0 0 3px rgba(16, 16, 24, .5);
@@ -98,15 +91,9 @@ footer > a:hover, footer > a:focus {
 	text-shadow: 0 0 5px rgba(16, 16, 24, .5);
 	transform: scale(1.1);
 }
-@media (max-width: 570px) {
+@media (max-width: 579px) {
 	form {
+		flex-wrap: nowrap;
 		flex-direction: column;
-		align-items: center;
-	}
-	form > .form-group:nth-child(2) {
-		margin: 20px 0;
-	}
-	.form-group > label {
-		margin: 0;
 	}
 }
