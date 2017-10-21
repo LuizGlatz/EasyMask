@@ -1,250 +1,245 @@
-function mask (e) {
-	let m = e.getAttribute('mask');
-	let v = e.value;
-	switch (m) {
+const mask = elemento => {
+	let mascara = elemento.getAttribute('mask')
+	let valor = elemento.value
+	switch (mascara) {
 		case 'cpf':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (v.length > 11) {
-				v = v.substr(0, 11);
+			if (valor.length > 11) {
+				valor = valor.substr(0, 11)
 			}
 
-			e.value = (v.length > 9) ? v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4') :
-				(v.length > 6) ? v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3') :
-				(v.length > 3) ? v.replace(/(\d{3})(\d{1,3})/, '$1.$2') :
-				(v.length > 0) ? v : '';
-			break;
+			elemento.value = (valor.length > 9) ? valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4') :
+				(valor.length > 6) ? valor.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3') :
+				(valor.length > 3) ? valor.replace(/(\d{3})(\d{1,3})/, '$1.$2') :
+				(valor.length > 0) ? valor : ''
+			break
 		case 'cnpj':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (v.length > 14) {
-				v = v.substr(0, 14);
+			if (valor.length > 14) {
+				valor = valor.substr(0, 14)
 			}
 
-			e.value = (v.length > 12) ? v.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{1,2})/, '$1.$2.$3/$4-$5') :
-				(v.length > 8) ? v.replace(/(\d{2})(\d{3})(\d{3})(\d{1,4})/, '$1.$2.$3/$4') :
-				(v.length > 5) ? v.replace(/(\d{2})(\d{3})(\d{1,3})/, '$1.$2.$3') :
-				(v.length > 2) ? v.replace(/(\d{2})(\d{1,3})/, '$1.$2') :
-				(v.length > 0) ? v : '';
-			break;
+			elemento.value = (valor.length > 12) ? valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{1,2})/, '$1.$2.$3/$4-$5') :
+				(valor.length > 8) ? valor.replace(/(\d{2})(\d{3})(\d{3})(\d{1,4})/, '$1.$2.$3/$4') :
+				(valor.length > 5) ? valor.replace(/(\d{2})(\d{3})(\d{1,3})/, '$1.$2.$3') :
+				(valor.length > 2) ? valor.replace(/(\d{2})(\d{1,3})/, '$1.$2') :
+				(valor.length > 0) ? valor : ''
+			break
 		case 'telefone':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (v.length > 11) {
-				v = v.substr(0, 11);
+			if (valor.length > 11) {
+				valor = valor.substr(0, 11)
 			}
 
-			e.value = (v.length === 11) ? v.replace(/(\d{2})(\d{5})(\d{4})/, '($1)$2-$3') :
-				(v.length > 6) ? v.replace(/(\d{2})(\d{4})(\d{1,4})/, '($1)$2-$3') :
-				(v.length > 2) ? v.replace(/(\d{2})(\d{1,4})/, '($1)$2') :
-				(v.length > 0) ? v : '';
-			break;
+			elemento.value = (valor.length === 11) ? valor.replace(/(\d{2})(\d{5})(\d{4})/, '($1)$2-$3') :
+				(valor.length > 6) ? valor.replace(/(\d{2})(\d{4})(\d{1,4})/, '($1)$2-$3') :
+				(valor.length > 2) ? valor.replace(/(\d{2})(\d{1,4})/, '($1)$2') :
+				(valor.length > 0) ? valor : ''
+			break
 		case 'data':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (v.length > 8) {
-				v = v.substr(0, 8);
+			if (valor.length > 8) {
+				valor = valor.substr(0, 8)
 			}
 
-			v = maskData(v);
-
-			e.value = (v.length > 4) ? v.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3') :
-				(v.length > 2) ? v.replace(/(\d{2})(\d{1,2})/, '$1/$2') :
-				(v.length > 0) ? v : '';
-			break;
+			console.log(valor)
+			valor = maskData(valor)
+			console.log(valor)
+			elemento.value = (valor.length > 4) ? valor.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3') :
+				(valor.length > 2) ? valor.replace(/(\d{2})(\d{1,2})/, '$1/$2') :
+				(valor.length > 0) ? valor : ''
+			break
 		default:
-			console.log('Insira um atributo "mask" no input a ser mascarado.');
+			console.log('Insira um atributo "mask" no input a ser mascarado.')
 	}
 }
 
-function ultDiaMes (m) {
-	let u;
+const ultDiaMes = mes => {
+	let ultimo
 
-	if (m == 2) {
-		u = 29;
-	} else if (m < 8) {
-		u = (m % 2 == 0) ? 30 : 31;
+	if (mes === '02') {
+		ultimo = '29'
+	} else if (mes < '08') {
+		ultimo = (mes % 2 === 0) ? '30' : '31'
 	} else {
-		u = (m % 2 == 0) ? 31 : 30;
+		ultimo = (mes % 2 === 0) ? '31' : '30'
 	}
 
-	return u;
+	return ultimo
 }
 
-function maskData (v) {
-	let a = new Date();
-	let min = a.getFullYear() - 100;
-	let max = a.getFullYear() + 100;
-	let u;
-	let n = '';
+const maskData = data => {
+	let hoje = new Date()
+	let min = (hoje.getFullYear() - 100).toString()
+	let max = (hoje.getFullYear() + 100).toString()
+	let novaData = ''
+	let ultimo
 
-	(v[0]) ? n = v[0] : null;
+	(data[0]) ? novaData += data[0] : novaData += '';
 
-	if (v[1]) {
-		if (v.slice(0, 2) > 31) {
-			n = '31';
-		} else if (v.slice(0, 2) == 0) {
-			n = '01';
+	if (data[1]) {
+		if (data.slice(0, 2) > '31') {
+			novaData = '31'
+		} else if (data.slice(0, 2) < '01') {
+			novaData = '01'
 		} else {
-			n += v[1];
+			novaData += data[1]
 		}
 	}
 
-	(v[2]) ? n += v[2] : null;
+	(data[2]) ? novaData += data[2] : novaData += '';
 
-	if (v[3]) {
-		if (v.slice(2, 4) > 12) {
-			n = n.slice(0, 2) + '12';
-		} else if (v.slice(2, 4) == 0) {
-			n = n.slice(0, 2) + '01';
+	if (data[3]) {
+		if (data.slice(2, 4) > '12') {
+			novaData = novaData.slice(0, 2) + '12'
+		} else if (data.slice(2, 4) < '01') {
+			novaData = novaData.slice(0, 2) + '01'
 		} else {
-			n += v[3];
+			novaData += data[3]
 		}
 
-		if (n.slice(0, 2) > ultDiaMes(n.slice(2, 4))) {
-			u = ultDiaMes(n.slice(2, 4));
-			n = u + n.slice(2, 4);
-		}
-	}
-
-	(v[4]) ? n += v[4] : null;
-	(v[5]) ? n += v[5] : null;
-	(v[6]) ? n += v[6] : null;
-
-	if (v[7]) {
-		n += v[7];
-
-		if (n.slice(4, 8) < min) {
-			n = n.slice(0, 4) + min;
-		} else if (n.slice(4, 8) > max) {
-			n = n.slice(0, 4) + max;
-		}
-
-		if (n.slice(0, 2) == 29 && n.slice(2, 4) == 2 && n.slice(4, 8) % 4 != 0) {
-			n = '28' + n.slice(2, 8);
+		if (novaData.slice(0, 2) > ultDiaMes(novaData.slice(2, 4))) {
+			ultimo = ultDiaMes(novaData.slice(2, 4))
+			novaData = ultimo + novaData.slice(2, 4)
 		}
 	}
 
-	return n;
+	(data[4]) ? novaData += data[4] : novaData += '';
+	(data[5]) ? novaData += data[5] : novaData += '';
+	(data[6]) ? novaData += data[6] : novaData += '';
+
+	if (data[7]) {
+		novaData += data[7]
+
+		if (novaData.slice(4, 8) < min) {
+			novaData = novaData.slice(0, 4) + min
+		} else if (novaData.slice(4, 8) > max) {
+			novaData = novaData.slice(0, 4) + max
+		}
+
+		if (novaData.slice(0, 2) === '29' && novaData.slice(2, 4) === '02' && novaData.slice(4, 8) % 4 !== 0) {
+			novaData = '28' + novaData.slice(2, 8)
+		}
+	}
+
+	return novaData
 }
 
-function digRepetido (digitos) {
+const digRepetido = digitos => {
 	for (let digito of digitos) {
-		if (digitos[0] != digito) {
-			return false;
+		if (digitos[0] !== digito) {
+			return false
 		}
 	}
-	return true;
+	return true
 }
 
-function digCrescente (digitos) {
-	return digitos.match(/(123456789)/);
+const digSequencia = digitos => {
+	return digitos.match(/(123456789|987654321)/g)
 }
 
-function digDecrescente (digitos) {
-	return digitos.match(/(987654321)/);
-}
-
-function cpfValido (v) {
-	if (v.length === 11 && !digRepetido(v) && !digCrescente(v) && !digDecrescente(v)) {
-		let r = 0;
+const cpfValido = digitos => {
+	if (digitos.length === 11 && !digRepetido(digitos) && !digSequencia(digitos)) {
+		let resto = 0
 
 		for (let i = 0; i < 9; i++) {
-			r += v[i] * (10 - i);
+			resto += digitos[i] * (10 - i)
 		}
-		r = r % 11;
-		let x = (r < 2) ? 0 : 11 - r;
+		resto = resto % 11
+		let verificador1 = (r < 2) ? 0 : 11 - r
 
-		r = 0;
+		resto = 0
 		for (let i = 0; i < 10; i++) {
-			r += v[i] * (11 - i);
+			resto += digitos[i] * (11 - i)
 		}
-		r = r % 11;
-		let y = (r < 2) ? 0 : 11 - r;
+		resto = resto % 11
+		let verificador2 = (r < 2) ? 0 : 11 - r
 
-		return (x == v[9] && y == v[10]);
+		return verificador1 === parseInt(digitos[9]) && verificador2 === parseInt(digitos[10])
 	}
 
-	return false;
+	return false
 }
 
-function cnpjValido (valor) {
-	if (valor.length === 14 && !digRepetido(valor) && !digCrescente(valor) && !digDecrescente(valor)) {
-		let resto = 0;
-		let a = 5;
+const cnpjValido = digitos => {
+	if (digitos.length === 14 && !digRepetido(digitos) && !digSequencia(digitos)) {
+		let resto = 0
+		let a = 5
 		for (let i = 0; i < 12; i++) {
-			resto += valor[i] * a;
+			resto += digitos[i] * a
 
-			(a == 2) ? a = 9 : a--;
+			(a === 2) ? a = 9 : a--
 		}
-		resto = resto % 11;
-		let x = (resto < 2) ? 0 : 11 - resto;
+		resto = resto % 11
+		let verificador1 = (resto < 2) ? 0 : 11 - resto
 
-		a = 6;
-		resto = 0;
+		a = 6
+		resto = 0
 		for (let i = 0; i < 13; i++) {
-			resto += valor[i] * a;
+			resto += digitos[i] * a
 
-			(a == 2) ? a = 9 : a--;
+			(a === 2) ? a = 9 : a--
 		}
-		resto = resto % 11;
-		let y = (resto < 2) ? 0 : 11 - resto;
+		resto = resto % 11
+		let verificador2 = (resto < 2) ? 0 : 11 - resto
 
-		return (x == valor[12] && y == valor[13]);
+		return verificador1 === parseInt(digitos[12]) && verificador2 === parseInt(digitos[13])
 	}
 
-	return false;
+	return false
 }
 
-function validate (e) {
-	let m = e.getAttribute('mask');
-	let v = e.value;
-	switch (m) {
+const validate = elemento => {
+	let mascara = elemento.getAttribute('mask')
+	let valor = elemento.value
+	switch (mascara) {
 		case 'cpf':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (cpfValido(v)) {
-				e.classList.remove('erro');
-				e.classList.add('ok');
+			if (cpfValido(valor)) {
+				elemento.classList.remove('erro')
+				elemento.classList.add('ok')
 			} else {
-				e.classList.remove('ok');
-				e.classList.add('erro');
+				elemento.classList.remove('ok')
+				elemento.classList.add('erro')
 			}
-			break;
+			break
 		case 'cnpj':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (cnpjValido(v)) {
-				e.classList.remove('erro');
-				e.classList.add('ok');
+			if (cnpjValido(valor)) {
+				elemento.classList.remove('erro')
+				elemento.classList.add('ok')
 			} else {
-				e.classList.remove('ok');
-				e.classList.add('erro');
+				elemento.classList.remove('ok')
+				elemento.classList.add('erro')
 			}
-			break;
+			break
 		case 'telefone':
-			v = v.replace(/\D/g, '');
+			valor = valor.replace(/\D/g, '')
 
-			if (v.length < 10 || v.length > 11) {
-				e.classList.remove('ok');
-				e.classList.add('erro');
+			if (valor.length < 10 || valor.length > 11) {
+				elemento.classList.remove('ok')
+				elemento.classList.add('erro')
 			} else {
-				e.classList.remove('erro');
-				e.classList.add('ok');
+				elemento.classList.remove('erro')
+				elemento.classList.add('ok')
 			}
-			break;
+			break
 		case 'data':
-			v = v.split('/');
-			d = new Date(v[2], v[1] - 1, v[0]);
-			if (v[2].length == 4 && d != 'Invalid Date' && d.getDate() == v[0] && d.getMonth() == v[1] - 1 && d.getFullYear() == v[2]) {
-				e.classList.remove('erro');
-				e.classList.add('ok');
+			if (valor.length === 10) {
+				elemento.classList.remove('erro')
+				elemento.classList.add('ok')
 			} else {
-				e.classList.remove('ok');
-				e.classList.add('erro');
+				elemento.classList.remove('ok')
+				elemento.classList.add('erro')
 			}
 			break
 		default:
-			console.log('Insira um atributo "mask" no input a ser validado.');
+			console.log('Insira um atributo "mask" no input a ser validado.')
 	}
 }
