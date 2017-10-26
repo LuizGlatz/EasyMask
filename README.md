@@ -16,6 +16,15 @@ por todos e que pudesse colaborar com a comunidade!
 * Após a instalação, digite: npm run start
 * Abra o navegador e entre no endereço: localhost:8000
 
+## Como utilizar o EasyMask?
+* Clone o repositório
+* Copie o arquivo EasyMask.js, encontra-se na pasta js/, para a pasta do seu projeto
+* Não esqueça de importar o javascript no seu HTML
+* Insira um evento de input, chamando a função mask(elementoInput)
+* Insira um evento de change, chamando a função validate(elementoInput)
+* Após isso, resta apenas inserir o atributo mask com o tipo de máscara a ser usada (cpf, telefone ou data)
+#### Prontinho! Neste momento é só recarregar a página e testar.
+
 ## Como posso contribuir?
 
 Fique à vontade para abrir um PR, todas as alterações e melhorias serão consideradas :blush:
