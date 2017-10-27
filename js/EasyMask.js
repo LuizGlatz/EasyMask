@@ -150,14 +150,14 @@ const cpfValido = digitos => {
 			resto += digitos[i] * (10 - i)
 		}
 		resto = resto % 11
-		let verificador1 = (r < 2) ? 0 : 11 - r
+		let verificador1 = (resto < 2) ? 0 : 11 - resto
 
 		resto = 0
 		for (let i = 0; i < 10; i++) {
 			resto += digitos[i] * (11 - i)
 		}
 		resto = resto % 11
-		let verificador2 = (r < 2) ? 0 : 11 - r
+		let verificador2 = (resto < 2) ? 0 : 11 - resto
 
 		return verificador1 === parseInt(digitos[9]) && verificador2 === parseInt(digitos[10])
 	}
