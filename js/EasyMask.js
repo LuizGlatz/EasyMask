@@ -1,6 +1,7 @@
 const mask = elemento => {
 	let mascara = elemento.getAttribute('mask')
 	let valor = elemento.value
+	let curPosition = elemento.selectionStart
 	switch (mascara) {
 		case 'cpf':
 			valor = valor.replace(/\D/g, '')
@@ -46,9 +47,7 @@ const mask = elemento => {
 				valor = valor.substr(0, 8)
 			}
 
-			console.log(valor)
 			valor = maskData(valor)
-			console.log(valor)
 			elemento.value = (valor.length > 4) ? valor.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3') :
 				(valor.length > 2) ? valor.replace(/(\d{2})(\d{1,2})/, '$1/$2') :
 				(valor.length > 0) ? valor : ''
@@ -150,14 +149,14 @@ const cpfValido = digitos => {
 			resto += digitos[i] * (10 - i)
 		}
 		resto = resto % 11
-		let verificador1 = (r < 2) ? 0 : 11 - r
+		let verificador1 = (resto < 2) ? 0 : 11 - resto
 
 		resto = 0
 		for (let i = 0; i < 10; i++) {
 			resto += digitos[i] * (11 - i)
 		}
 		resto = resto % 11
-		let verificador2 = (r < 2) ? 0 : 11 - r
+		let verificador2 = (resto < 2) ? 0 : 11 - resto
 
 		return verificador1 === parseInt(digitos[9]) && verificador2 === parseInt(digitos[10])
 	}
