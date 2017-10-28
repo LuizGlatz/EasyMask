@@ -1,3 +1,33 @@
+// Para facilitar a vida do dev e evitar erros foi embutido neste arquivo
+// pega todos inputs com o atributo mask
+(function() {
+	let inputs = document.querySelectorAll('input')
+	for(let input of inputs) {
+		if(input.hasAttribute('mask')) {
+			input.addEventListener('input', () => { mask(input) })
+			input.addEventListener('change', () => { validate(input) })
+			input.addEventListener('keydown', event => { cursorPos(event) })
+		}
+	}
+})()
+
+// Mantém o cursor na posição onde estava
+// Necessita arrumar na inserção
+const cursorPos = event => {
+	let el = event.target
+	let pos
+	switch(event.keyCode) {
+		case 8:
+			pos = el.selectionStart - 1
+			break
+		case 46:
+			pos = el.selectionStart
+			break
+	}
+	el.pos = pos
+}
+
+// Faz a máscara dos inputs
 const mask = elemento => {
 	let mascara = elemento.getAttribute('mask')
 	let valor = elemento.value
@@ -55,8 +85,13 @@ const mask = elemento => {
 		default:
 			console.log('Insira um atributo "mask" no input a ser mascarado.')
 	}
+	if(elemento.pos) {
+		console.log(elemento.pos)
+		elemento.setSelectionRange(elemento.pos, elemento.pos)
+	}
 }
 
+// Calcula o último dia do mês
 const ultDiaMes = mes => {
 	let ultimo
 
@@ -71,6 +106,8 @@ const ultDiaMes = mes => {
 	return ultimo
 }
 
+// Cria um limite de data de + ou - 100 anos do ano atual
+// Faz a máscara da data
 const maskData = data => {
 	let hoje = new Date()
 	let min = (hoje.getFullYear() - 100).toString()
@@ -128,6 +165,7 @@ const maskData = data => {
 	return novaData
 }
 
+// Verifica se os digitos são todos iguais
 const digRepetido = digitos => {
 	for (let digito of digitos) {
 		if (digitos[0] !== digito) {
@@ -137,10 +175,12 @@ const digRepetido = digitos => {
 	return true
 }
 
+// Verifica a sequência as mais usadas no Brasil
 const digSequencia = digitos => {
 	return digitos.match(/(123456789|987654321)/g)
 }
 
+// Calcula os dígitos verificadores e os verificam
 const cpfValido = digitos => {
 	if (digitos.length === 11 && !digRepetido(digitos) && !digSequencia(digitos)) {
 		let resto = 0
@@ -164,6 +204,7 @@ const cpfValido = digitos => {
 	return false
 }
 
+// Calcula os dígitos verificadores e os verificam
 const cnpjValido = digitos => {
 	if (digitos.length === 14 && !digRepetido(digitos) && !digSequencia(digitos)) {
 		let resto = 0

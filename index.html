@@ -41,31 +41,5 @@
 		</footer>
 
 		<script src="js/EasyMask.js"></script>
-		<!-- JS inline para reduzir requisições -->
-		<script>
-			// let tel = document.querySelector('input#tel');
-			// tel.addEventListener('input', () => { mask(tel) });
-			// tel.addEventListener('change', () => { validate(tel) });
-
-			// let cpf = document.querySelector('input#cpf');
-			// cpf.addEventListener('input', () => { mask(cpf) });
-			// cpf.addEventListener('change', () => { validate(cpf) });
-			
-			// let data = document.querySelector('input#data');
-			// data.addEventListener('input', () => { mask(data) });
-			// data.addEventListener('change', () => { validate(data) });
-
-			// let cnpj = document.querySelector('input#cnpj');
-			// cnpj.addEventListener('input', () => { mask(cnpj) });
-			// cnpj.addEventListener('change', () => { validate(cnpj) });
-			let inputs = document.querySelectorAll('input')
-			for(let input of inputs) {
-				if(input.hasAttribute('mask')) {
-					console.log(input)
-					input.addEventListener('input', () => { mask(input) })
-					input.addEventListener('change', () => { validate(input) })
-				}
-			}
-		</script>
 	</body>
 </html>
