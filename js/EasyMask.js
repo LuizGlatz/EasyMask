@@ -25,14 +25,14 @@ const cursorPos = event => {
 			break
 		default:
 			switch (el.getAttribute('mask')) {
-				case "cpf":
+				case 'cpf':
 					if (el.selectionStart === 3 || el.selectionStart === 7 || el.selectionStart === 11) {
 						pos = el.selectionStart + 2
 					} else {
 						pos = el.selectionStart + 1
 					}
 					break;
-				case "cnpj":
+				case 'cnpj':
 					if (
 						el.selectionStart === 2 || el.selectionStart === 6 ||
 						el.selectionStart === 10 || el.selectionStart === 15
@@ -42,7 +42,7 @@ const cursorPos = event => {
 						pos = el.selectionStart + 1
 					}
 					break;
-				case "telefone":
+				case 'telefone':
 					if (el.selectionStart === 2) {
 						pos = el.selectionStart + 3
 					} else if (el.selectionStart === 8) {
@@ -51,14 +51,14 @@ const cursorPos = event => {
 						pos = el.selectionStart + 1
 					}
 					break;
-				case "data":
+				case 'data':
 					if (el.selectionStart === 2 || el.selectionStart === 5) {
 						pos = el.selectionStart + 2
 					} else {
 						pos = el.selectionStart + 1
 					}
 					break;
-				case "cep":
+				case 'cep':
 					if (el.selectionStart === 5) {
 						pos = el.selectionStart + 2
 					} else {
@@ -333,6 +333,16 @@ const validate = elemento => {
 				elemento.classList.add('erro')
 			}
 			break
+		case 'cep':
+			valor = valor.replace(/\D/g, '')
+
+			if (valor.length === 8) {
+				elemento.classList.remove('erro')
+				elemento.classList.add('ok')
+			} else {
+				elemento.classList.remove('ok')
+				elemento.classList.add('erro')
+			}
 		default:
 			console.log('Insira um atributo "mask" no input a ser validado.')
 	}
