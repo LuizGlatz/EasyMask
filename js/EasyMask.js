@@ -16,13 +16,49 @@
 const cursorPos = event => {
 	let el = event.target
 	let pos
-	switch(event.keyCode) {
+	switch (event.keyCode) {
 		case 8:
 			pos = el.selectionStart - 1
 			break
 		case 46:
 			pos = el.selectionStart
 			break
+		default:
+			switch (el.getAttribute('mask')) {
+				case "cpf":
+					if (el.selectionStart === 3 || el.selectionStart === 7 || el.selectionStart === 11) {
+						pos = el.selectionStart + 2
+					} else {
+						pos = el.selectionStart + 1
+					}
+					break;
+				case "cnpj":
+					if (
+						el.selectionStart === 2 || el.selectionStart === 6 ||
+						el.selectionStart === 10 || el.selectionStart === 15
+					) {
+						pos = el.selectionStart + 2
+					} else {
+						pos = el.selectionStart + 1
+					}
+					break;
+				case "telefone":
+					if (el.selectionStart === 2) {
+						pos = el.selectionStart + 3
+					} else if (el.selectionStart === 8) {
+						pos = el.selectionStart + 2
+					} else {
+						pos = el.selectionStart + 1
+					}
+					break;
+				case "data":
+					if (el.selectionStart === 2 || el.selectionStart === 5) {
+						pos = el.selectionStart + 2
+					} else {
+						pos = el.selectionStart + 1
+					}
+					break;
+			}
 	}
 	el.pos = pos
 }
@@ -86,7 +122,6 @@ const mask = elemento => {
 			console.log('Insira um atributo "mask" no input a ser mascarado.')
 	}
 	if(elemento.pos) {
-		console.log(elemento.pos)
 		elemento.setSelectionRange(elemento.pos, elemento.pos)
 	}
 }
